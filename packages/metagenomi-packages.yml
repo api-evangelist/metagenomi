@@ -1,0 +1,91 @@
+generated: '2026-08-25'
+method: searched
+source: >-
+  https://pypi.org/pypi/metagenomi/json, https://api.github.com/users/Metagenomi, plus
+  negative registry probes of npm, RubyGems, crates.io, Packagist, NuGet and the Go
+  module proxy
+note: >-
+  Metagenomi publishes exactly one first-party software package anywhere, and it is NOT an
+  API client SDK — no `SDKs` pointer is wired in apis.yml, because there is no Metagenomi
+  API for an SDK to wrap. The `metagenomi` PyPI distribution is first-party beyond doubt:
+  its author is "Metagenomi.co", its author_email is info@metagenomi.co (the same address
+  on the company's GitHub organization profile) and its declared homepage is
+  http://metagenomi.co. Its own description states its purpose in full — "Helper python
+  scripts for metagenomi's docker system" — so it is internal build/ops tooling that
+  happened to be pushed to a public index, not a developer product. It shipped 189
+  releases in nine months and then stopped: the last release, 1.3.20, is dated
+  2019-07-31, seven years before this probe. That is the strongest provider-published
+  decay signal available for this company, and it is recorded as structured
+  version/published fields rather than buried in prose.
+packages:
+- name: metagenomi
+  registry: pypi
+  url: https://pypi.org/project/metagenomi/
+  metadata_url: https://pypi.org/pypi/metagenomi/json
+  language: python
+  official: true
+  official_evidence: >-
+    author "Metagenomi.co"; author_email info@metagenomi.co, which matches the public
+    email on https://github.com/Metagenomi; project homepage http://metagenomi.co
+  is_api_client: false
+  purpose: internal Docker/ops helper scripts (verbatim from the package description)
+  license: MIT
+  version: 1.3.20
+  published: '2019-07-31'
+  first_published: '2018-11-07'
+  release_count: 189
+  yanked: false
+  requires_dist: null
+  status: abandoned
+  status_note: >-
+    No release in seven years. The package is still installable and not yanked, so a
+    consumer can pull 1.3.20 today and get 2019 code with no declared dependency pins
+    (requires_dist is null) and no declared Python version floor.
+registries_probed:
+- registry: npm
+  url: https://registry.npmjs.org/metagenomi
+  status: 404
+  result: absent
+- registry: npm-search
+  url: https://registry.npmjs.org/-/v1/search?text=metagenomi
+  status: 200
+  result: 0 results
+- registry: rubygems
+  url: https://rubygems.org/api/v1/gems/metagenomi.json
+  status: 404
+  result: absent
+- registry: crates.io
+  url: https://crates.io/api/v1/crates/metagenomi
+  status: 403
+  result: >-
+    crates.io rejects unauthenticated crawler user-agents with 403; no Rust crate by
+    this name appears in its search either
+- registry: packagist
+  url: https://repo.packagist.org/p2/metagenomi/metagenomi.json
+  status: 404
+  result: absent
+- registry: nuget
+  url: https://api.nuget.org/v3/registration5-semver1/metagenomi/index.json
+  status: 404
+  result: absent
+- registry: go-proxy
+  url: https://proxy.golang.org/github.com/metagenomi/@v/list
+  status: 404
+  result: absent
+source_code:
+  github_organization: https://github.com/Metagenomi
+  github_org_verified: true
+  github_org_evidence: >-
+    Organization profile declares blog http://www.metagenomi.co, email info@metagenomi.co
+    and location Berkeley, CA — first-party, created 2018-09-18.
+  public_repos: 0
+  note: >-
+    The organization exists and is genuinely the company's, but it has published zero
+    public repositories in eight years. There is no source for the PyPI package, no
+    bioinformatics tooling, and no specification of any kind on GitHub.
+counts:
+  packages_total: 1
+  official: 1
+  api_clients: 0
+  registries_with_a_package: 1
+  registries_probed: 7

@@ -1,0 +1,133 @@
+generated: '2026-08-25'
+method: probed
+source: live HTTP probes of metagenomi.co and ir.metagenomi.co
+note: >-
+  No /.well-known document is served by any Metagenomi host, so NO WellKnown and NO
+  SecurityTxt pointer is wired in apis.yml — this file records an absence, not a presence.
+  The corporate site metagenomi.co (Craft CMS 4 behind Cloudflare) answers every unknown
+  path with an honest HTTP 404 that renders the site's branded error page, so the rows
+  below are real 404s rather than soft-200 shells. The investor-relations host
+  ir.metagenomi.co (Q4 Inc / gcs-web) also returns real 404s, except on .json paths where
+  its edge answers 403 "Access Denied" before the origin is reached; a 403 on a path we
+  have no other evidence exists is recorded as probed-and-blocked, not as a document.
+hosts:
+- host: https://metagenomi.co
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+    content_type: text/html
+    note: branded Craft CMS 404 page, not a document
+  - path: /.well-known/openid-configuration
+    status: 404
+    content_type: text/html
+    note: branded Craft CMS 404 page, not a document
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+    content_type: text/html
+    note: branded Craft CMS 404 page, not a document
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+    content_type: text/html
+    note: branded Craft CMS 404 page, not a document
+  - path: /.well-known/api-catalog
+    status: 404
+    content_type: text/html
+    note: branded Craft CMS 404 page, not a document
+  - path: /.well-known/ai-plugin.json
+    status: 404
+    content_type: text/html
+    note: branded Craft CMS 404 page, not a document
+  - path: /.well-known/agent-card.json
+    status: 404
+    content_type: text/html
+    note: branded Craft CMS 404 page, not a document
+  - path: /.well-known/agent.json
+    status: 404
+    content_type: text/html
+    note: legacy pre-0.3 A2A path, also absent
+  - path: /.well-known/apis.json
+    status: 404
+    content_type: text/html
+- host: https://ir.metagenomi.co
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+    content_type: text/html
+  - path: /.well-known/openid-configuration
+    status: 404
+    content_type: text/html
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+    content_type: text/html
+  - path: /.well-known/api-catalog
+    status: 404
+    content_type: text/html
+  - path: /.well-known/ai-plugin.json
+    status: 403
+    content_type: text/html
+    note: edge "Access Denied" on .json paths; blocked before origin, not a document
+  - path: /.well-known/agent-card.json
+    status: 403
+    content_type: text/html
+    note: edge "Access Denied" on .json paths; blocked before origin, not a document
+  - path: /.well-known/agent.json
+    status: 403
+    content_type: text/html
+    note: edge "Access Denied" on .json paths; blocked before origin, not a document
+x-evidence:
+  fetched: '2026-08-25'
+  hosts_probed:
+  - metagenomi.co
+  - ir.metagenomi.co
+  other_paths:
+  - url: https://metagenomi.co/robots.txt
+    status: 200
+  - url: https://metagenomi.co/sitemap.xml
+    status: 200
+  - url: https://metagenomi.co/humans.txt
+    status: 200
+  - url: https://metagenomi.co/llms.txt
+    status: 404
+  - url: https://ir.metagenomi.co/robots.txt
+    status: 200
+  - url: https://ir.metagenomi.co/llms.txt
+    status: 404
+  contract_discovery:
+    note: >-
+      STEP 0b was run in full against metagenomi.co and ir.metagenomi.co. Every REST
+      spec path (/openapi.json, /openapi.yaml, /swagger.json, /v1/openapi.json,
+      /api-docs, /docs, /redoc, /api) returned 404 on metagenomi.co. There is no
+      /graphql surface to introspect (404), no hosted MCP endpoint to POST tools/list
+      to, and no A2A agent card at either the canonical or legacy well-known path.
+      robots.txt disallows only /cpresources/, /vendor/, /.env and /cache/ — nothing
+      that would hide a developer surface — and the sitemap enumerates the ENTIRE site
+      as seven pages plus a news section, none of them developer-facing.
+  subdomains:
+  - host: www.metagenomi.co
+    dns: small-lorikeet-production.cl-us-east-5.servd.dev -> 146.190.184.54
+    tcp_443: open
+    https: failed
+    note: >-
+      TLS terminates with a wildcard certificate for *.cl-us-east-5.servd.dev, which
+      carries no SAN for www.metagenomi.co, so every HTTPS request to the www variant
+      fails certificate validation. Only the apex metagenomi.co is usable.
+  - host: data.metagenomi.co
+    dns: a34e647e04e3d4f20a3c54938b6e444d-6665b0eab77a2f51.elb.us-west-2.amazonaws.com
+    tcp_443: timeout
+    tcp_80: timeout
+    note: >-
+      The only non-marketing subdomain that resolves. It points at an AWS Elastic Load
+      Balancer in us-west-2 that accepts no connection from the public internet on
+      either port — an internal or IP-restricted host, not a published data or API
+      surface.
+  - hosts_not_resolving:
+    - api.metagenomi.co
+    - dev.metagenomi.co
+    - developer.metagenomi.co
+    - docs.metagenomi.co
+    - app.metagenomi.co
+    - platform.metagenomi.co
+    - portal.metagenomi.co
+    - status.metagenomi.co
+    - trust.metagenomi.co
+    note: NXDOMAIN — no wildcard DNS, so these are genuine absences rather than catch-alls.
