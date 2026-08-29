@@ -19,6 +19,17 @@ description: >-
   first-party software package — the `metagenomi` PyPI library of internal Docker helper
   scripts — has not shipped a release since July 2019.
 url: https://raw.githubusercontent.com/api-evangelist/metagenomi/refs/heads/main/apis.yml
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: false
+  label: Hosted service · you call their endpoint
+  confidence: medium
+  source:
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 image: https://metagenomi.imgix.net/metagenomi-seo-image.png?auto=compress%2Cformat&crop=focalpoint&fit=crop&fp-x=0.5&fp-y=0.5&h=630&q=60&w=1200&s=dcdcd18b56fbe733f9ccf2ad0dd474dd
 x-type: company
 x-source: harvest:secondary-market
