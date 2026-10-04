@@ -60,7 +60,7 @@ tags:
 - Genomics
 - Drug Discovery
 - Life Sciences
-- Machine-Learning
+- Machine Learning
 - Metagenomics
 - Research
 tags_raw:
@@ -76,6 +76,7 @@ tags_raw:
 - Machine Learning
 - Metagenomics
 - Research
+- Machine-Learning
 apis: []
 maintainers:
 - FN: Kin Lane
